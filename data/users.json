@@ -1,0 +1,62 @@
+[
+    {
+        "id": 1,
+        "name": "Administrator",
+        "username": "admin",
+        "password": "$2y$10$G6eRM2C26\/Qww0D.0oJUn.4OTJJrA8emIIPkKxXdTGRPlyeV3wx6u",
+        "role": "admin",
+        "division": "all",
+        "email": "praveen@falconchemicals.com",
+        "active": true
+    },
+    {
+        "id": 2,
+        "name": "Sales Manager - Construction",
+        "username": "sales.construction",
+        "password": "$2y$10$ZWWbc7\/3Ny3SCysB4sXAoOX7WP9xVwe\/Ac2o\/ILBW6YorR3FJKUre",
+        "role": "manager",
+        "division": "manufacturing-construction-chemicals",
+        "email": "construction@falconchemicals.ae",
+        "active": true
+    },
+    {
+        "id": 3,
+        "name": "Sales Manager - Detergents",
+        "username": "sales.detergents",
+        "password": "$2y$10$\/\/G4giPXjMZ\/Ja594megeut\/DxNycfjaKgm.KHeaXQJQA9GDS\/hR2",
+        "role": "manager",
+        "division": "manufacturing-detergents-and-disinfectant",
+        "email": "detergents@falconchemicals.ae",
+        "active": true
+    },
+    {
+        "id": 4,
+        "name": "Sales Manager - Adhesives",
+        "username": "sales.adhesives",
+        "password": "$2y$10$ZwxHVhPrXQhY5xeZ5TMHmOUEU7iYUIJzCyMRxlLhZp0KOSqd5BSxu",
+        "role": "manager",
+        "division": "manufacturing-adhesives-and-polymer-emulsions",
+        "email": "adhesives@falconchemicals.ae",
+        "active": true
+    },
+    {
+        "id": 5,
+        "name": "Sales Manager - Bitumen",
+        "username": "sales.bitumen",
+        "password": "$2y$10$rN9sQbtVM.3AMbe8JaP9Z.hWj.nQZi4GCcH5UQQGYo3eDMSeQy.9G",
+        "role": "manager",
+        "division": "manufacturing-bitumen-products",
+        "email": "bitumen@falconchemicals.ae",
+        "active": true
+    },
+    {
+        "id": 6,
+        "name": "Sales Manager - Acid",
+        "username": "sales.acid",
+        "password": "$2y$10$lGIf9hiSCqxfBvpM0aUNxO3RdME.19kqSGG6u.arH\/lVk\/TVxDRpa",
+        "role": "manager",
+        "division": "manufacturing-sulphuric-acid",
+        "email": "acid@falconchemicals.ae",
+        "active": true
+    }
+]

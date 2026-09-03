@@ -1,0 +1,38 @@
+[
+    {
+        "email": "praveen6150@gmail.com",
+        "ip": "162.158.110.29",
+        "at": "2026-04-14 17:37:30",
+        "handled": false
+    },
+    {
+        "email": "praveen6150@gmail.com",
+        "ip": "172.71.98.153",
+        "at": "2026-04-14 18:47:15",
+        "handled": false
+    },
+    {
+        "email": "praveen@falconchemicals.com",
+        "ip": "172.71.215.24",
+        "at": "2026-04-15 13:03:30",
+        "handled": false
+    },
+    {
+        "email": "praveen@falconchemicals.com",
+        "ip": "104.23.225.168",
+        "at": "2026-04-17 18:55:15",
+        "handled": false
+    },
+    {
+        "email": "praveen6150@gmail.com",
+        "ip": "172.68.234.175",
+        "at": "2026-04-30 05:19:59",
+        "handled": false
+    },
+    {
+        "email": "praveen@falconchemicals.com",
+        "ip": "141.101.76.181",
+        "at": "2026-09-02 14:17:41",
+        "handled": false
+    }
+]
