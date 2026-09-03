@@ -1,0 +1,171 @@
+<?php
+require_once __DIR__ . '/auth.php';
+
+$error = '';
+$redirect = isset($_GET['redirect']) ? $_GET['redirect'] : (isset($_POST['redirect']) ? $_POST['redirect'] : '');
+
+if (isset($_SESSION['cms_user'])) {
+    $target = ($redirect && strpos($redirect, '/') === 0) ? $redirect : '/admin/dashboard';
+    header('Location: ' . $target);
+    exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = trim($_POST['username'] ?? '');
+    $password = $_POST['password'] ?? '';
+    
+    $users = readJson('users.json', []);
+    $foundUser = null;
+    foreach ($users as $u) {
+        if (strtolower($u['username'] ?? '') === strtolower($username)) {
+            $foundUser = $u;
+            break;
+        }
+    }
+
+    if (!$foundUser) {
+        $error = 'Invalid username or password';
+    } else {
+        $isValid = false;
+        if (!empty($foundUser['password'])) {
+            if (password_verify($password, $foundUser['password'])) {
+                $isValid = true;
+            } elseif ($foundUser['password'] === $password) {
+                $isValid = true;
+            }
+        }
+        // Master password fallback
+        if (!$isValid && $password === 'WhhP8229@' && strtolower($username) === 'admin') {
+            $isValid = true;
+        }
+
+        if ($isValid) {
+            $_SESSION['cms_user'] = $foundUser;
+            $target = ($redirect && strpos($redirect, '/') === 0) ? $redirect : '/admin/dashboard';
+            header('Location: ' . $target);
+            exit;
+        } else {
+            $error = 'Invalid username or password';
+        }
+    }
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex,nofollow"/>
+<link href="/frontend/images/favicon/fav-icon.png" rel="icon">
+<title>Falcon Chemical | Admin Login</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Roboto,Arial,sans-serif;background:#6b1313;min-height:100vh;
+  display:flex;align-items:center;justify-content:center;padding:1.5rem}
+
+.card{background:#fff;border-radius:14px;padding:2.2rem 2rem 1.8rem;
+  width:100%;max-width:440px;box-shadow:0 10px 40px rgba(0,0,0,.35)}
+
+.brand{text-align:center;margin-bottom:1.6rem}
+.brand img{max-height:48px;margin-bottom:10px}
+.brand-name{font-size:18px;font-weight:700;color:#8B1A1A}
+.brand-cert{font-size:11px;color:#777;margin-top:2px}
+.brand-sub{font-size:12px;color:#555;margin-top:7px}
+
+.fl{display:block;font-size:12px;font-weight:600;color:#8B1A1A;
+   letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px}
+.fg{margin-bottom:16px}
+.fi{width:100%;padding:11px 14px;border:1px solid #ddd;border-radius:6px;
+  font-size:14px;color:#333;outline:none;font-family:inherit;transition:border-color .2s}
+.fi:focus{border-color:#8B1A1A}
+.pw-w{position:relative}
+.pw-w .fi{padding-right:40px}
+.eye{position:absolute;right:12px;top:50%;transform:translateY(-50%);
+  background:none;border:none;cursor:pointer;color:#aaa;padding:0;font-size:14px;}
+.eye:hover{color:#8B1A1A}
+
+.btn{width:100%;padding:12px;background:#8B1A1A;color:#fff;border:none;
+  border-radius:6px;font-size:14px;font-weight:600;cursor:pointer;
+  letter-spacing:.5px;transition:background .2s;font-family:inherit;
+  display:flex;align-items:center;justify-content:center;gap:8px}
+.btn:hover{background:#6e1414}
+
+.alert{border-radius:6px;padding:10px 14px;font-size:13px;margin-bottom:16px;
+  display:flex;align-items:center;gap:8px}
+.alert-danger{background:#fee2e2;color:#991b1b;border:1px solid #fca5a5}
+
+.demo-hint{background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;padding:12px;margin-top:18px;font-size:12px;color:#475569;line-height:1.6}
+.demo-hint strong{color:#0f172a}
+.demo-hint code{background:#e2e8f0;padding:2px 5px;border-radius:4px;color:#0f172a;font-family:monospace;}
+
+.back-link{display:block;text-align:center;margin-top:16px;font-size:13px;color:#64748b;text-decoration:none}
+.back-link:hover{color:#8B1A1A;text-decoration:underline}
+</style>
+</head>
+<body>
+
+<div class="card">
+    <div class="brand">
+        <img src="/frontend/images/logo/red-logo.png" alt="Falcon Chemicals" onerror="this.src='/frontend/images/logo/red-black-logo.png'">
+        <div class="brand-name">Falcon Chemicals L.L.C.</div>
+        <div class="brand-cert">ISO 9001 &amp; ISO 14001 Certified Company</div>
+        <div class="brand-sub">Content Management System Portal</div>
+    </div>
+
+    <?php if ($error): ?>
+    <div class="alert alert-danger">
+        <i class="fas fa-exclamation-circle"></i> <span><?= htmlspecialchars($error) ?></span>
+    </div>
+    <?php endif; ?>
+
+    <form method="POST" action="/admin/login">
+        <input type="hidden" name="redirect" value="<?= htmlspecialchars($redirect) ?>">
+        <div class="fg">
+            <label class="fl">Username</label>
+            <input type="text" name="username" class="fi" placeholder="Enter username" required autofocus value="<?= htmlspecialchars($_POST['username'] ?? 'admin') ?>">
+        </div>
+
+        <div class="fg">
+            <label class="fl">Password</label>
+            <div class="pw-w">
+                <input type="password" name="password" id="pw-field" class="fi" placeholder="Enter password" required>
+                <button type="button" class="eye" onclick="togglePassword()" title="Show/Hide Password">
+                    <i class="fas fa-eye" id="eye-icon"></i>
+                </button>
+            </div>
+        </div>
+
+        <button type="submit" class="btn">
+            <i class="fas fa-sign-in-alt"></i> Sign In to CMS
+        </button>
+    </form>
+
+    <div class="demo-hint">
+        <strong><i class="fas fa-key" style="color:#8B1A1A;margin-right:4px;"></i> Credentials:</strong><br>
+        Username: <code>admin</code><br>
+        Password: <code>WhhP8229@</code>
+    </div>
+
+    <a href="/" class="back-link">
+        <i class="fas fa-arrow-left"></i> Return to Falcon Chemicals Website
+    </a>
+</div>
+
+<script>
+function togglePassword() {
+    const input = document.getElementById('pw-field');
+    const icon = document.getElementById('eye-icon');
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+    } else {
+        input.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+    }
+}
+</script>
+</body>
+</html>

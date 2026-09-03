@@ -1,0 +1,85 @@
+# Falcon Chemicals - Apache Configuration for Etisalat Web Hosting
+Options -Indexes
+Options +FollowSymLinks
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+
+# 1. Protect data files (security: prevent downloading raw JSON or backups directly)
+RewriteRule ^data/.*$ - [F,L]
+
+# 2. Contact form handling
+RewriteRule ^contact/?$ contact-handler.php [QSA,L]
+RewriteRule ^contact-handler\.php$ contact-handler.php [QSA,L]
+
+# 3. Admin API endpoints
+RewriteRule ^admin/api/upload-image/?$ admin/api/upload-image.php [QSA,L]
+RewriteRule ^admin/api/save-page/?$ admin/api/save-page.php [QSA,L]
+RewriteRule ^admin/api/page-backups/([^/]+)/?$ admin/api/page-backups.php?page=$1 [QSA,L]
+RewriteRule ^admin/api/restore-backup/?$ admin/api/restore-backup.php [QSA,L]
+
+# 4. Admin Navigation & Auth
+RewriteRule ^admin/?$ admin/dashboard.php [QSA,L]
+RewriteRule ^admin/login/?$ admin/login.php [QSA,L]
+RewriteRule ^admin/logout/?$ admin/logout.php [QSA,L]
+RewriteRule ^admin/dashboard/?$ admin/dashboard.php [QSA,L]
+RewriteRule ^admin/pages/?$ admin/pages.php [QSA,L]
+
+# 5. Admin Products & Accordion
+RewriteRule ^admin/products/?$ admin/products.php [QSA,L]
+RewriteRule ^admin/products/create/?$ admin/products_edit.php?action=create [QSA,L]
+RewriteRule ^admin/products/edit/([^/]+)/?$ admin/products_edit.php?id=$1 [QSA,L]
+RewriteRule ^admin/products/delete/([^/]+)/?$ admin/products_delete.php?id=$1 [QSA,L]
+RewriteRule ^admin/products/([^/]+)/accordion/add/?$ admin/accordion_edit.php?product_id=$1&action=add [QSA,L]
+RewriteRule ^admin/products/([^/]+)/accordion/edit/([^/]+)/?$ admin/accordion_edit.php?product_id=$1&acc_idx=$2 [QSA,L]
+RewriteRule ^admin/products/([^/]+)/accordion/delete/([^/]+)/?$ admin/accordion_delete.php?product_id=$1&acc_idx=$2 [QSA,L]
+
+# 6. Admin Articles
+RewriteRule ^admin/articles/?$ admin/articles.php [QSA,L]
+RewriteRule ^admin/articles/create/?$ admin/articles_edit.php?action=create [QSA,L]
+RewriteRule ^admin/articles/edit/([^/]+)/?$ admin/articles_edit.php?id=$1 [QSA,L]
+RewriteRule ^admin/articles/delete/([^/]+)/?$ admin/articles_delete.php?id=$1 [QSA,L]
+
+# 7. Admin Enquiries
+RewriteRule ^admin/enquiries/?$ admin/enquiries.php [QSA,L]
+RewriteRule ^admin/enquiries/view/([^/]+)/?$ admin/enquiry_view.php?id=$1 [QSA,L]
+RewriteRule ^admin/enquiries/delete/([^/]+)/?$ admin/enquiry_delete.php?id=$1 [QSA,L]
+
+# 8. Admin Users & Settings
+RewriteRule ^admin/users/?$ admin/users.php [QSA,L]
+RewriteRule ^admin/users/create/?$ admin/users_edit.php?action=create [QSA,L]
+RewriteRule ^admin/users/edit/([^/]+)/?$ admin/users_edit.php?id=$1 [QSA,L]
+RewriteRule ^admin/users/delete/([^/]+)/?$ admin/users_delete.php?id=$1 [QSA,L]
+RewriteRule ^admin/settings/?$ admin/settings.php [QSA,L]
+
+# 9. Allow direct access to admin assets, frontend assets, storage
+RewriteCond %{REQUEST_URI} ^/(admin/assets|frontend|storage)/ [NC]
+RewriteRule ^ - [L]
+
+# 10. Pass requests with ?edit=1 or root or html requests to page-viewer.php for CMS editor injection
+RewriteCond %{QUERY_STRING} (^|&)edit=1(&|$) [NC,OR]
+RewriteCond %{REQUEST_URI} ^/$ [OR]
+RewriteCond %{REQUEST_URI} \.html$ [NC]
+RewriteRule ^.*$ page-viewer.php [QSA,L]
+
+# 11. Allow existing files and directories to be served directly
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# 12. Clean URL mapping: /about -> /about.html or page-viewer.php
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^([^/]+)/?$ page-viewer.php [QSA,L]
+
+# 13. Fallback to index.html
+RewriteRule ^.*$ page-viewer.php [QSA,L]
+
+</IfModule>
+
+<IfModule mod_headers.c>
+    # Security headers
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set X-Frame-Options "SAMEORIGIN"
+</IfModule>

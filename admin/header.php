@@ -1,0 +1,106 @@
+<?php
+require_once __DIR__ . '/auth.php';
+requireAuth();
+$currentUser = getCurrentUser();
+$currentPath = $_SERVER['REQUEST_URI'];
+$pageTitle = isset($pageTitle) ? $pageTitle : 'Dashboard';
+$title = isset($title) ? $title : $pageTitle;
+
+$flashSuccess = isset($_SESSION['flash_success']) ? $_SESSION['flash_success'] : null;
+$flashError = isset($_SESSION['flash_error']) ? $_SESSION['flash_error'] : null;
+unset($_SESSION['flash_success'], $_SESSION['flash_error']);
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?= htmlspecialchars($title) ?> – Falcon Chemicals CMS Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="/admin/assets/css/admin.css">
+    <link href="/frontend/images/favicon/fav-icon.png" rel="icon">
+</head>
+<body>
+
+<!-- ── SIDEBAR ── -->
+<aside class="sidebar">
+    <div class="sidebar-brand">
+        <img src="/frontend/images/logo/red-logo.png" alt="Falcon Chemicals" onerror="this.style.display='none'">
+        <div class="brand-text">Falcon Chemicals</div>
+        <div class="brand-sub">CMS Admin Panel</div>
+    </div>
+
+    <div class="sidebar-user">
+        <div class="user-avatar"><?= strtoupper(substr($currentUser['name'] ?? 'A', 0, 1)) ?></div>
+        <div>
+            <div class="user-name"><?= htmlspecialchars($currentUser['name'] ?? 'Administrator') ?></div>
+            <div class="user-role"><?= ucfirst(htmlspecialchars($currentUser['role'] ?? 'Admin')) ?></div>
+        </div>
+    </div>
+
+    <nav class="sidebar-nav">
+        <div class="nav-section">Main</div>
+        <a href="/admin/dashboard" class="<?= (strpos($currentPath, '/admin/dashboard') !== false || $currentPath === '/admin' || $currentPath === '/admin/') ? 'active' : '' ?>">
+            <i class="fas fa-tachometer-alt"></i> Dashboard
+        </a>
+
+        <div class="nav-section">Visual CMS</div>
+        <a href="/admin/pages" class="<?= strpos($currentPath, '/admin/pages') !== false ? 'active' : '' ?>">
+            <i class="fas fa-file-code"></i> Pages & Backups
+        </a>
+        <a href="/?edit=1" target="_blank" style="display:flex;align-items:center;justify-content:space-between;">
+            <span><i class="fas fa-magic" style="color:#C8102E;"></i> Live Visual Editor</span>
+            <span style="font-size:10px;background:#C8102E;color:#fff;padding:2px 6px;border-radius:10px;">Live</span>
+        </a>
+
+        <div class="nav-section">Content</div>
+        <a href="/admin/products" class="<?= strpos($currentPath, '/admin/products') !== false ? 'active' : '' ?>">
+            <i class="fas fa-flask"></i> Divisions & Products
+        </a>
+        <a href="/admin/articles" class="<?= strpos($currentPath, '/admin/articles') !== false ? 'active' : '' ?>">
+            <i class="fas fa-newspaper"></i> Articles
+        </a>
+        <a href="/admin/enquiries" class="<?= strpos($currentPath, '/admin/enquiries') !== false ? 'active' : '' ?>">
+            <i class="fas fa-envelope"></i> Enquiries
+        </a>
+
+        <?php if ($currentUser && $currentUser['role'] === 'admin'): ?>
+        <div class="nav-section">Administration</div>
+        <a href="/admin/users" class="<?= strpos($currentPath, '/admin/users') !== false ? 'active' : '' ?>">
+            <i class="fas fa-users"></i> Manage Users
+        </a>
+        <a href="/admin/settings" class="<?= strpos($currentPath, '/admin/settings') !== false ? 'active' : '' ?>">
+            <i class="fas fa-cog"></i> Settings
+        </a>
+        <?php endif; ?>
+    </nav>
+
+    <div class="sidebar-footer">
+        <a href="/admin/logout"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+    </div>
+</aside>
+
+<!-- ── MAIN CONTENT ── -->
+<div class="main-content">
+    <div class="topbar">
+        <div class="topbar-title">
+            <?= htmlspecialchars($pageTitle) ?>
+        </div>
+        <div class="topbar-right">
+            <a href="/" target="_blank" class="btn-view-site">
+                <i class="fas fa-external-link-alt"></i> View Website
+            </a>
+        </div>
+    </div>
+
+    <div class="content-area">
+        <?php if ($flashSuccess): ?>
+        <div class="alert alert-success" style="background:#d1fae5;color:#065f46;padding:12px 16px;border-radius:6px;margin-bottom:18px;display:flex;align-items:center;gap:8px;border:1px solid #a7f3d0;">
+            <i class="fas fa-check-circle"></i> <?= htmlspecialchars($flashSuccess) ?>
+        </div>
+        <?php endif; ?>
+        <?php if ($flashError): ?>
+        <div class="alert alert-danger" style="background:#fee2e2;color:#991b1b;padding:12px 16px;border-radius:6px;margin-bottom:18px;display:flex;align-items:center;gap:8px;border:1px solid #fca5a5;">
+            <i class="fas fa-exclamation-circle"></i> <?= htmlspecialchars($flashError) ?>
+        </div>
+        <?php endif; ?>
