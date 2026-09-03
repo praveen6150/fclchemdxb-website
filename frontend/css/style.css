@@ -1898,7 +1898,7 @@ textarea.form-control {
 }
 
 .form-group-select:after {
-  content: "ï„‡";
+  content: "";
   font-family: FontAwesome;
   position: absolute;
   top: 50%;
@@ -2092,7 +2092,7 @@ textarea.form-control {
 
 .breadcrumb-item+.breadcrumb-item::before {
   font-family: FontAwesome;
-  content: "ï„…";
+  content: "";
 }
 
 /*----------------------
@@ -2156,7 +2156,7 @@ textarea.form-control {
 }
 
 .list-items li:before {
-  content: "ï€Œ";
+  content: "";
   font-family: "Fontawesome";
   position: absolute;
   top: 50%;
@@ -2581,7 +2581,7 @@ textarea.form-control {
 }
 
 .navbar .dropdown-toggle:after {
-  content: "ï„…";
+  content: "";
   font-family: fontAwesome;
   border: none;
   vertical-align: middle;
@@ -2625,7 +2625,7 @@ textarea.form-control {
 
 .navbar .dropdown-menu .nav__item .nav__item-link:after {
   font-family: "icomoon";
-  content: "î¤‚";
+  content: "";
   position: absolute;
   top: 0;
   left: 0px;
@@ -3197,7 +3197,7 @@ textarea.form-control {
 
   .navbar .nav__item.opened>i[data-toggle=dropdown]:before,
   .navbar .nav__item.show>i[data-toggle=dropdown]:before {
-    content: "ï„‡";
+    content: "";
   }
 
   .navbar .dropdown-menu {
@@ -3446,7 +3446,7 @@ textarea.form-control {
 
   .navbar .dropdown-menu.mega-dropdown-menu .nav__item .nav__item-link:after {
     font-family: "FontAwesome";
-    content: "ï„‘";
+    content: "";
     position: absolute;
     top: auto;
     left: -7px;
@@ -3754,7 +3754,7 @@ textarea.form-control {
   position: absolute;
   right: 0;
   top: 0;
-  content: "ï§";
+  content: "";
   font-family: fontawesome;
   background-color: transparent;
   color: #1b1a1a;
@@ -3778,7 +3778,7 @@ textarea.form-control {
 .accordion-item.opened .accordion__item-title:after {
   background-color: #ED1C24;
   color: #ffffff;
-  content: "ï¨";
+  content: "";
 }
 
 .accordion-item .accordion__item-body {
@@ -4254,7 +4254,7 @@ textarea.form-control {
 
 .carousel-arrows .owl-nav .owl-prev:before {
   font-family: "icomoon";
-  content: "î¤";
+  content: "";
   font-size: 55px;
 }
 
@@ -4264,7 +4264,7 @@ textarea.form-control {
 
 .carousel-arrows .owl-nav .owl-next:before {
   font-family: "icomoon";
-  content: "î¤ƒ";
+  content: "";
   font-size: 55px;
 }
 
@@ -4753,7 +4753,7 @@ textarea.form-control {
   top: 0;
   left: 0;
   font-family: "Fontawesome";
-  content: "ï€Œ";
+  content: "";
   color: #ED1C24;
   font-size: 18px;
 }
@@ -5133,7 +5133,7 @@ textarea.form-control {
 }
 
 .portfolio-carousel .carousel-arrows .owl-nav .owl-prev:before {
-  content: "î¤€";
+  content: "";
   font-size: 13px;
 }
 
@@ -5142,7 +5142,7 @@ textarea.form-control {
 }
 
 .portfolio-carousel .carousel-arrows .owl-nav .owl-next:before {
-  content: "î¤‚";
+  content: "";
   font-size: 13px;
 }
 
@@ -5460,7 +5460,7 @@ textarea.form-control {
 }
 
 .testimonials .carousel-arrows .owl-nav .owl-prev:before {
-  content: "î¤€";
+  content: "";
   font-size: 13px;
 }
 
@@ -5470,7 +5470,7 @@ textarea.form-control {
 }
 
 .testimonials .carousel-arrows .owl-nav .owl-next:before {
-  content: "î¤‚";
+  content: "";
   font-size: 13px;
 }
 
@@ -6333,7 +6333,7 @@ textarea.form-control {
 }
 
 .pricing-item .pricing__list li:after {
-  content: "ï€Œ";
+  content: "";
   font-family: FontAwesome;
   position: absolute;
   top: 0;
