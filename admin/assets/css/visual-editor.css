@@ -1,0 +1,532 @@
+/* ==========================================================================
+   FALCON CHEMICALS - LIVE VISUAL CMS EDITOR STYLES
+   ========================================================================== */
+
+/* ── Live Editing Visual Guides ── */
+body.cms-editing-active .cms-editable-text {
+    outline: 2px dashed rgba(200, 16, 46, 0.45) !important;
+    outline-offset: 3px !important;
+    cursor: text !important;
+    transition: outline-color 0.15s ease, background-color 0.15s ease !important;
+    position: relative !important;
+}
+
+body.cms-editing-active .cms-editable-text:hover {
+    outline: 2px dashed #C8102E !important;
+    background-color: rgba(200, 16, 46, 0.05) !important;
+}
+
+body.cms-editing-active .cms-editable-text:focus,
+body.cms-editing-active .cms-editable-text[contenteditable="true"]:focus {
+    outline: 2px solid #C8102E !important;
+    background-color: rgba(200, 16, 46, 0.03) !important;
+}
+
+body.cms-editing-active .cms-editable-image {
+    outline: 2px dashed #0284c7 !important;
+    outline-offset: 3px !important;
+    cursor: pointer !important;
+    position: relative !important;
+    transition: outline-color 0.15s ease !important;
+}
+
+body.cms-editing-active .cms-editable-image:hover {
+    outline: 2px solid #0284c7 !important;
+    opacity: 0.92 !important;
+}
+
+body.cms-editing-active .cms-image-wrapper {
+    position: relative !important;
+    display: inline-block !important;
+}
+
+body.cms-editing-active .cms-image-btn {
+    position: absolute !important;
+    top: 10px !important;
+    right: 10px !important;
+    background: rgba(17, 24, 39, 0.9) !important;
+    color: #fff !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    padding: 6px 12px !important;
+    border-radius: 6px !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    cursor: pointer !important;
+    z-index: 1000 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+}
+
+body.cms-editing-active .cms-image-btn:hover {
+    background: #C8102E !important;
+}
+
+/* ── Floating Main Dock / Bar ── */
+#falcon-cms-bar {
+    position: fixed !important;
+    bottom: 24px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    z-index: 9999999 !important;
+    background: rgba(17, 24, 39, 0.96) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+    color: #f3f4f6 !important;
+    padding: 8px 16px !important;
+    border-radius: 40px !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.12) !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 14px !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif !important;
+    font-size: 13px !important;
+    user-select: none !important;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    max-width: 95vw !important;
+}
+
+#falcon-cms-bar.minimized {
+    bottom: 16px !important;
+    left: auto !important;
+    right: 16px !important;
+    transform: none !important;
+    padding: 6px 14px !important;
+    border-radius: 24px !important;
+}
+
+#falcon-cms-bar.minimized .cms-full-controls {
+    display: none !important;
+}
+
+.cms-brand {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    font-weight: 700 !important;
+    color: #fff !important;
+    font-size: 13px !important;
+    letter-spacing: 0.3px !important;
+}
+
+.cms-brand-logo {
+    width: 22px !important;
+    height: 22px !important;
+    background: #C8102E !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 11px !important;
+    font-weight: 900 !important;
+    color: #fff !important;
+}
+
+.cms-page-pill {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: #94a3b8 !important;
+    padding: 3px 10px !important;
+    border-radius: 12px !important;
+    font-size: 11px !important;
+    font-family: monospace !important;
+    max-width: 140px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+
+.cms-divider {
+    width: 1px !important;
+    height: 20px !important;
+    background: rgba(255, 255, 255, 0.15) !important;
+}
+
+/* ── Switch Toggle for Edit Mode ── */
+.cms-toggle-group {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    cursor: pointer !important;
+}
+
+.cms-switch {
+    position: relative !important;
+    width: 38px !important;
+    height: 22px !important;
+    background: #374151 !important;
+    border-radius: 20px !important;
+    transition: background 0.2s !important;
+}
+
+.cms-switch::after {
+    content: '' !important;
+    position: absolute !important;
+    top: 2px !important;
+    left: 2px !important;
+    width: 18px !important;
+    height: 18px !important;
+    background: #fff !important;
+    border-radius: 50% !important;
+    transition: transform 0.2s !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3) !important;
+}
+
+.cms-toggle-group.active .cms-switch {
+    background: #C8102E !important;
+}
+
+.cms-toggle-group.active .cms-switch::after {
+    transform: translateX(16px) !important;
+}
+
+.cms-toggle-label {
+    font-weight: 600 !important;
+    color: #e5e7eb !important;
+    font-size: 12px !important;
+}
+
+/* ── Bar Action Buttons ── */
+.cms-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    padding: 6px 14px !important;
+    border-radius: 20px !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    border: none !important;
+    cursor: pointer !important;
+    transition: all 0.15s ease !important;
+    font-family: inherit !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+}
+
+.cms-btn-primary {
+    background: #C8102E !important;
+    color: #fff !important;
+    box-shadow: 0 2px 8px rgba(200, 16, 46, 0.4) !important;
+}
+
+.cms-btn-primary:hover {
+    background: #a50d26 !important;
+    color: #fff !important;
+}
+
+.cms-btn-primary.dirty {
+    animation: cms-pulse-save 2s infinite !important;
+    background: #e11d48 !important;
+}
+
+@keyframes cms-pulse-save {
+    0% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.7); }
+    70% { box-shadow: 0 0 0 9px rgba(225, 29, 72, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0); }
+}
+
+.cms-btn-secondary {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: #e5e7eb !important;
+}
+
+.cms-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.18) !important;
+    color: #fff !important;
+}
+
+.cms-btn-icon {
+    width: 28px !important;
+    height: 28px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: #94a3b8 !important;
+    border: none !important;
+    cursor: pointer !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 11px !important;
+    transition: all 0.15s !important;
+}
+
+.cms-btn-icon:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    color: #fff !important;
+}
+
+.cms-badge-dirty {
+    background: #ef4444 !important;
+    color: #fff !important;
+    font-size: 10px !important;
+    padding: 1px 6px !important;
+    border-radius: 10px !important;
+    font-weight: 700 !important;
+}
+
+/* ── Inline Text Formatting Bubble ── */
+#falcon-cms-format-bar {
+    position: absolute !important;
+    z-index: 1000000 !important;
+    background: #1e293b !important;
+    color: #fff !important;
+    border-radius: 8px !important;
+    padding: 4px 6px !important;
+    display: none;
+    align-items: center !important;
+    gap: 4px !important;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.1) !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    font-size: 12px !important;
+}
+
+#falcon-cms-format-bar button {
+    background: none !important;
+    border: none !important;
+    color: #cbd5e1 !important;
+    width: 26px !important;
+    height: 26px !important;
+    border-radius: 4px !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 12px !important;
+    transition: background 0.15s, color 0.15s !important;
+}
+
+#falcon-cms-format-bar button:hover {
+    background: rgba(255,255,255,0.15) !important;
+    color: #fff !important;
+}
+
+#falcon-cms-format-bar .fmt-sep {
+    width: 1px !important;
+    height: 16px !important;
+    background: rgba(255,255,255,0.15) !important;
+    margin: 0 2px !important;
+}
+
+/* ── Color Swatches in Format Bar ── */
+.cms-color-dot {
+    width: 14px !important;
+    height: 14px !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    border: 1px solid rgba(255,255,255,0.3) !important;
+    transition: transform 0.15s !important;
+}
+
+.cms-color-dot:hover {
+    transform: scale(1.25) !important;
+}
+
+/* ── Modal Dialogs (Images, Links, Revisions) ── */
+.cms-modal-overlay {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: rgba(0, 0, 0, 0.65) !important;
+    backdrop-filter: blur(4px) !important;
+    z-index: 10000000 !important;
+    display: none;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 20px !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+}
+
+.cms-modal-overlay.active {
+    display: flex !important;
+}
+
+.cms-modal-box {
+    background: #fff !important;
+    color: #1f2937 !important;
+    border-radius: 12px !important;
+    width: 100% !important;
+    max-width: 520px !important;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4) !important;
+    overflow: hidden !important;
+    animation: cms-modal-pop 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+@keyframes cms-modal-pop {
+    0% { opacity: 0; transform: scale(0.95); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+.cms-modal-header {
+    background: #f8fafc !important;
+    padding: 16px 20px !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+}
+
+.cms-modal-header h3 {
+    margin: 0 !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    color: #0f172a !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+.cms-modal-close {
+    background: none !important;
+    border: none !important;
+    color: #64748b !important;
+    font-size: 18px !important;
+    cursor: pointer !important;
+    padding: 4px !important;
+    border-radius: 4px !important;
+    line-height: 1 !important;
+}
+
+.cms-modal-close:hover {
+    color: #0f172a !important;
+    background: #e2e8f0 !important;
+}
+
+.cms-modal-body {
+    padding: 20px !important;
+    max-height: 75vh !important;
+    overflow-y: auto !important;
+}
+
+.cms-modal-footer {
+    background: #f8fafc !important;
+    padding: 14px 20px !important;
+    border-top: 1px solid #e2e8f0 !important;
+    display: flex !important;
+    justify-content: flex-end !important;
+    gap: 10px !important;
+}
+
+/* Modal form controls */
+.cms-form-group {
+    margin-bottom: 16px !important;
+}
+
+.cms-form-group label {
+    display: block !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    color: #374151 !important;
+    margin-bottom: 6px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+}
+
+.cms-input {
+    width: 100% !important;
+    padding: 10px 12px !important;
+    border: 1px solid #d1d5db !important;
+    border-radius: 6px !important;
+    font-size: 14px !important;
+    color: #1f2937 !important;
+    outline: none !important;
+    font-family: inherit !important;
+    box-sizing: border-box !important;
+}
+
+.cms-input:focus {
+    border-color: #C8102E !important;
+    box-shadow: 0 0 0 3px rgba(200, 16, 46, 0.15) !important;
+}
+
+.cms-dropzone {
+    border: 2px dashed #cbd5e1 !important;
+    border-radius: 8px !important;
+    padding: 24px 16px !important;
+    text-align: center !important;
+    background: #f8fafc !important;
+    cursor: pointer !important;
+    transition: all 0.2s !important;
+}
+
+.cms-dropzone:hover, .cms-dropzone.dragover {
+    border-color: #C8102E !important;
+    background: #fff1f2 !important;
+}
+
+.cms-dropzone i {
+    font-size: 32px !important;
+    color: #C8102E !important;
+    margin-bottom: 8px !important;
+}
+
+.cms-preview-box {
+    margin-top: 12px !important;
+    text-align: center !important;
+    background: #f1f5f9 !important;
+    padding: 12px !important;
+    border-radius: 6px !important;
+}
+
+.cms-preview-box img {
+    max-height: 140px !important;
+    max-width: 100% !important;
+    object-fit: contain !important;
+    border-radius: 4px !important;
+}
+
+/* ── Toast Notifications ── */
+#falcon-cms-toast {
+    position: fixed !important;
+    top: 24px !important;
+    right: 24px !important;
+    background: #0f172a !important;
+    color: #fff !important;
+    padding: 12px 18px !important;
+    border-radius: 8px !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3) !important;
+    font-size: 13px !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    display: none;
+    align-items: center !important;
+    gap: 10px !important;
+    z-index: 10000001 !important;
+    border-left: 4px solid #C8102E !important;
+    animation: cms-toast-in 0.3s ease !important;
+}
+
+#falcon-cms-toast.success {
+    border-left-color: #10b981 !important;
+}
+
+#falcon-cms-toast.error {
+    border-left-color: #ef4444 !important;
+}
+
+@keyframes cms-toast-in {
+    0% { transform: translateY(-12px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+
+/* Backups table */
+.cms-backups-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    font-size: 13px !important;
+}
+
+.cms-backups-table th, .cms-backups-table td {
+    padding: 10px 12px !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    text-align: left !important;
+}
+
+.cms-backups-table th {
+    background: #f8fafc !important;
+    font-weight: 600 !important;
+    color: #475569 !important;
+}

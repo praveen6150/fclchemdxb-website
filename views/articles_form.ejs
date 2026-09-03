@@ -1,0 +1,139 @@
+<%- include('partials/header') %>
+
+<!-- Quill.js for Rich Text Editing -->
+<link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+<script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+
+<style>
+.quill-wrapper { border:1px solid #ddd; border-radius:6px; overflow:hidden; }
+.quill-wrapper .ql-toolbar { background:#f8f8f8; border:none; border-bottom:1px solid #ddd; }
+.quill-wrapper .ql-container { border:none; font-size:14px; font-family:'Segoe UI',sans-serif; }
+.quill-wrapper .ql-editor { min-height:120px; }
+.quill-wrapper.large .ql-editor { min-height:380px; }
+</style>
+
+<div class="breadcrumb" style="margin-bottom:16px;font-size:13px;color:#666;">
+    <a href="/admin/articles" style="color:#C8102E;text-decoration:none;">Articles</a>
+    <span style="margin:0 6px;">/</span>
+    <span><%= isEdit ? 'Edit Article' : 'Add New Article' %></span>
+</div>
+
+<div class="page-card">
+    <div class="page-card-header">
+        <h2><i class="fas fa-<%= isEdit ? 'edit':'plus' %>" style="color:#C8102E;margin-right:8px;"></i><%= isEdit ? 'Edit Article' : 'Add New Article' %></h2>
+    </div>
+    <div class="page-card-body">
+        <form method="POST" action="<%= isEdit ? '/admin/articles/edit/' + article.id : '/admin/articles/create' %>" enctype="multipart/form-data" id="article-form">
+
+            <div class="form-group">
+                <label>Article Title *</label>
+                <input type="text" name="title" class="form-control" value="<%= article ? article.title || '' : '' %>" required>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>URL Slug *</label>
+                    <input type="text" name="slug" class="form-control" value="<%= article ? article.slug || '' : '' %>" required>
+                    <div class="form-hint">e.g. chemical-manufacturing-in-dubai</div>
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <input type="text" name="category" class="form-control" value="<%= article ? article.category || '' : '' %>" placeholder="e.g. Industry">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="text" name="date" class="form-control" value="<%= article ? article.date || '' : '' %>" placeholder="e.g. Dec 17, 2024">
+                </div>
+                <div class="form-group">
+                    <label>Tags (comma separated)</label>
+                    <input type="text" name="tags" class="form-control" value="<%= article && article.tags ? article.tags.join(', ') : '' %>" placeholder="e.g. Industry, Construction">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Upload Image</label>
+                    <input type="file" name="image_file" class="form-control" accept="image/*">
+                    <% if (article && article.image) { %>
+                    <img src="/storage/articles/<%= article.image %>"
+                         style="height:60px;margin-top:6px;border-radius:4px;object-fit:cover;"
+                         onerror="this.style.display='none'">
+                    <% } %>
+                </div>
+                <div class="form-group">
+                    <label>Image Filename (existing)</label>
+                    <input type="text" name="image" class="form-control" value="<%= article ? article.image || '' : '' %>">
+                    <div class="form-hint">Filename only e.g. wkz72E0G.webp</div>
+                </div>
+            </div>
+
+            <!-- Excerpt -->
+            <div class="form-group">
+                <label><i class="fas fa-align-left" style="color:#C8102E;margin-right:6px;"></i>Excerpt (short summary)</label>
+                <input type="hidden" name="excerpt" id="excerpt_input">
+                <div class="quill-wrapper">
+                    <div id="excerpt-editor"><%- article ? article.excerpt || '' : '' %></div>
+                </div>
+                <div class="form-hint">Shown on article listing cards. Keep it concise.</div>
+            </div>
+
+            <!-- Full Content -->
+            <div class="form-group">
+                <label><i class="fas fa-file-alt" style="color:#C8102E;margin-right:6px;"></i>Full Content</label>
+                <input type="hidden" name="content" id="content_input">
+                <div class="quill-wrapper large">
+                    <div id="content-editor"><%- article ? article.content || '' : '' %></div>
+                </div>
+                <div class="form-hint">Full article body — supports headings, bold, lists, links, images.</div>
+            </div>
+
+            <div class="form-group" style="margin-top:16px;">
+                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                    <input type="checkbox" name="active" <%= (article && article.active !== false) || !article ? 'checked' : '' %>>
+                    <span>Active (published on website)</span>
+                </label>
+            </div>
+
+            <div style="display:flex;gap:12px;margin-top:20px;">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> <%= isEdit ? 'Update Article' : 'Create Article' %></button>
+                <a href="/admin/articles" class="btn btn-secondary"><i class="fas fa-times"></i> Cancel</a>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<script>
+var excerptEditor = new Quill('#excerpt-editor', {
+    theme: 'snow',
+    modules: {
+        toolbar: [
+            ['bold', 'italic'],
+            ['clean']
+        ]
+    }
+});
+
+var contentEditor = new Quill('#content-editor', {
+    theme: 'snow',
+    modules: {
+        toolbar: [
+            [{ 'header': [1, 2, 3, false] }],
+            ['bold', 'italic', 'underline', 'strike'],
+            [{ 'color': [] }, { 'background': [] }],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+            ['link', 'image', 'blockquote', 'clean']
+        ]
+    }
+});
+
+document.getElementById('article-form').addEventListener('submit', function() {
+    document.getElementById('excerpt_input').value = excerptEditor.root.innerHTML;
+    document.getElementById('content_input').value = contentEditor.root.innerHTML;
+});
+</script>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,57 @@
+<%- include('partials/header') %>
+
+<div class="page-card">
+    <div class="page-card-header">
+        <h2>
+            <i class="fas fa-envelope" style="color:#C8102E;margin-right:8px;"></i>Enquiries
+            <span class="badge badge-primary" style="margin-left:8px;"><%= enquiries ? enquiries.length : 0 %></span>
+        </h2>
+    </div>
+    <div class="page-card-body" style="padding:0;">
+        <% if (!enquiries || enquiries.length === 0) { %>
+        <div class="empty-state">
+            <i class="fas fa-inbox"></i>
+            <p>No enquiries received yet.<br>They will appear here when visitors submit the contact form.</p>
+        </div>
+        <% } else { %>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Organization / Industry</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% enquiries.forEach(function(enq) { %>
+                    <tr>
+                        <td><%= enq.id %></td>
+                        <td><strong><%= enq.name || '-' %></strong></td>
+                        <td><%= enq.email || '-' %></td>
+                        <td><%= enq.phone || '-' %></td>
+                        <td><span class="badge badge-info"><%= enq.organization || enq.industry || '-' %></span></td>
+                        <td><%= enq.created_at || '-' %></td>
+                        <td style="display:flex;gap:6px;">
+                            <a href="/admin/enquiries/view/<%= enq.id %>" class="btn btn-sm btn-info"><i class="fas fa-eye"></i> View</a>
+                            <% if (enq.email) { %>
+                            <a href="mailto:<%= enq.email %>" class="btn btn-sm btn-success"><i class="fas fa-reply"></i></a>
+                            <% } %>
+                            <% if (currentUser && currentUser.role === 'admin') { %>
+                            <a href="/admin/enquiries/delete/<%= enq.id %>" class="btn btn-sm btn-danger confirm-delete"><i class="fas fa-trash"></i></a>
+                            <% } %>
+                        </td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+        <% } %>
+    </div>
+</div>
+
+<%- include('partials/footer') %>

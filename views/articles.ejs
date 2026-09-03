@@ -1,0 +1,66 @@
+<%- include('partials/header') %>
+
+<div class="page-card">
+    <div class="page-card-header">
+        <h2><i class="fas fa-newspaper" style="color:#C8102E;margin-right:8px;"></i>Articles</h2>
+        <% if (currentUser && currentUser.role === 'admin') { %>
+        <a href="/admin/articles/create" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add Article</a>
+        <% } %>
+    </div>
+    <div class="page-card-body" style="padding:0;">
+        <% if (!articles || articles.length === 0) { %>
+        <div class="empty-state"><i class="fas fa-newspaper"></i><p>No articles found.</p></div>
+        <% } else { %>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Image</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% articles.forEach(function(a) { %>
+                    <tr>
+                        <td><%= a.id %></td>
+                        <td>
+                            <% if (a.image) { %>
+                            <img src="/storage/articles/<%= a.image %>"
+                                 style="width:60px;height:40px;object-fit:cover;border-radius:4px;"
+                                 onerror="this.style.display='none'">
+                            <% } %>
+                        </td>
+                        <td>
+                            <strong><%= a.title %></strong>
+                            <div style="color:#888;font-size:12px;">/articles/<%= a.slug %></div>
+                        </td>
+                        <td><span class="badge badge-primary"><%= a.category || 'General' %></span></td>
+                        <td><%= a.date %></td>
+                        <td>
+                            <% if (a.active !== false) { %>
+                            <span class="badge badge-success">Active</span>
+                            <% } else { %>
+                            <span class="badge badge-danger">Hidden</span>
+                            <% } %>
+                        </td>
+                        <td style="display:flex;gap:6px;flex-wrap:wrap;">
+                            <a href="/admin/articles/edit/<%= a.id %>" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Edit</a>
+                            <% if (currentUser && currentUser.role === 'admin') { %>
+                            <a href="/admin/articles/delete/<%= a.id %>" class="btn btn-sm btn-danger confirm-delete"><i class="fas fa-trash"></i></a>
+                            <% } %>
+                        </td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+        <% } %>
+    </div>
+</div>
+
+<%- include('partials/footer') %>

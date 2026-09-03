@@ -1,0 +1,80 @@
+<%- include('partials/header') %>
+
+<div class="breadcrumb" style="margin-bottom:16px;font-size:13px;color:#666;">
+    <a href="/admin/enquiries" style="color:#C8102E;text-decoration:none;">Enquiries</a>
+    <span style="margin:0 6px;">/</span>
+    <span>View Enquiry #<%= enquiry.id %></span>
+</div>
+
+<div class="page-card">
+    <div class="page-card-header">
+        <h2><i class="fas fa-envelope" style="color:#C8102E;margin-right:8px;"></i>Enquiry Details</h2>
+        <div style="display:flex;gap:8px;">
+            <% if (enquiry.email) { %>
+            <a href="mailto:<%= enquiry.email %>" class="btn btn-sm btn-success">
+                <i class="fas fa-reply"></i> Reply
+            </a>
+            <% } %>
+            <% if (currentUser && currentUser.role === 'admin') { %>
+            <a href="/admin/enquiries/delete/<%= enquiry.id %>" class="btn btn-sm btn-danger confirm-delete">
+                <i class="fas fa-trash"></i> Delete
+            </a>
+            <% } %>
+            <a href="/admin/enquiries" class="btn btn-sm btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
+        </div>
+    </div>
+    <div class="page-card-body">
+        <div class="enquiry-detail" style="display:flex;flex-direction:column;gap:14px;">
+            <div class="enquiry-row" style="display:flex;border-bottom:1px solid #f0f0f0;padding-bottom:10px;">
+                <div class="enquiry-label" style="width:160px;font-weight:600;color:#666;">Name</div>
+                <div class="enquiry-value" style="flex:1;"><strong><%= enquiry.name || '-' %></strong></div>
+            </div>
+            <div class="enquiry-row" style="display:flex;border-bottom:1px solid #f0f0f0;padding-bottom:10px;">
+                <div class="enquiry-label" style="width:160px;font-weight:600;color:#666;">Email</div>
+                <div class="enquiry-value" style="flex:1;">
+                    <a href="mailto:<%= enquiry.email || '' %>" style="color:#C8102E;"><%= enquiry.email || '-' %></a>
+                </div>
+            </div>
+            <div class="enquiry-row" style="display:flex;border-bottom:1px solid #f0f0f0;padding-bottom:10px;">
+                <div class="enquiry-label" style="width:160px;font-weight:600;color:#666;">Phone</div>
+                <div class="enquiry-value" style="flex:1;"><%= enquiry.phone || '-' %></div>
+            </div>
+            <div class="enquiry-row" style="display:flex;border-bottom:1px solid #f0f0f0;padding-bottom:10px;">
+                <div class="enquiry-label" style="width:160px;font-weight:600;color:#666;">Organization</div>
+                <div class="enquiry-value" style="flex:1;">
+                    <span class="badge badge-primary"><%= enquiry.organization || enquiry.industry || '-' %></span>
+                </div>
+            </div>
+            <% if (enquiry.address) { %>
+            <div class="enquiry-row" style="display:flex;border-bottom:1px solid #f0f0f0;padding-bottom:10px;">
+                <div class="enquiry-label" style="width:160px;font-weight:600;color:#666;">Address</div>
+                <div class="enquiry-value" style="flex:1;"><%= enquiry.address %></div>
+            </div>
+            <% } %>
+            <% if (enquiry.city || enquiry.country) { %>
+            <div class="enquiry-row" style="display:flex;border-bottom:1px solid #f0f0f0;padding-bottom:10px;">
+                <div class="enquiry-label" style="width:160px;font-weight:600;color:#666;">Location</div>
+                <div class="enquiry-value" style="flex:1;"><%= [enquiry.city, enquiry.country].filter(Boolean).join(', ') %></div>
+            </div>
+            <% } %>
+            <% if (enquiry.website) { %>
+            <div class="enquiry-row" style="display:flex;border-bottom:1px solid #f0f0f0;padding-bottom:10px;">
+                <div class="enquiry-label" style="width:160px;font-weight:600;color:#666;">Website</div>
+                <div class="enquiry-value" style="flex:1;"><a href="<%= enquiry.website %>" target="_blank" style="color:#C8102E;"><%= enquiry.website %></a></div>
+            </div>
+            <% } %>
+            <div class="enquiry-row" style="display:flex;border-bottom:1px solid #f0f0f0;padding-bottom:10px;">
+                <div class="enquiry-label" style="width:160px;font-weight:600;color:#666;">Submitted Date</div>
+                <div class="enquiry-value" style="flex:1;"><%= enquiry.created_at || '-' %></div>
+            </div>
+            <div class="enquiry-row" style="display:flex;flex-direction:column;gap:8px;">
+                <div class="enquiry-label" style="font-weight:600;color:#666;">Message</div>
+                <div class="enquiry-value" style="white-space:pre-wrap;background:#f8f9fa;padding:16px;border-radius:8px;line-height:1.6;border:1px solid #eee;">
+                    <%= enquiry.message || '-' %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer') %>

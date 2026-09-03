@@ -3,7 +3,7 @@
         "id": 1,
         "name": "Administrator",
         "username": "admin",
-        "password": "$2y$10$G6eRM2C26\/Qww0D.0oJUn.4OTJJrA8emIIPkKxXdTGRPlyeV3wx6u",
+        "password": "$2a$10$.wlXmkQ65ZMx4R7o9yLmaezdTLhfeJLDjVK2p.WPZ4S8Te5EphBHm",
         "role": "admin",
         "division": "all",
         "email": "praveen@falconchemicals.com",

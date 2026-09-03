@@ -1,0 +1,6 @@
+{
+  "name": "Falcon Chemicals",
+  "description": "Corporate website and Live Visual CMS admin portal for Falcon Chemicals (L.L.C.)",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
